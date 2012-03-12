@@ -1,0 +1,3 @@
+<p><form action="logout.php">
+  <input type="submit" class="button" value="Logout">
+</form></p>

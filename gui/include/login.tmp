@@ -1,0 +1,19 @@
+<form action="login.php" method="post">
+	<table border = "1">
+		<tr>
+			<td>Username: </td><td><input type="text" name="username" value=""/></td>
+			<td>Password: </td><td><input type="password" name="pwd" value=""/></td>
+			<td><input accesskey="L" type="submit" class="button" name="login" value="Login"/></td>
+		</tr>
+	</table>
+</form>
+
+<form method ="post" action="index.php?action=register">
+	<table border = "1">
+		<tr>
+			<td>New user?</td>
+			<td><input accesskey="R" type="submit" class="button" value="Register"/></td>
+		</tr>
+	</table>
+</form><p></p>
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.16.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr-2.7.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/c3p0-0.9.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-collections-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-commons-annotations.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-entitymanager.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-jpa-2.0-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-validator-legacy.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hibernate-validator.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hsqldb.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/javassist-3.9.0.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jboss-javaee.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jta-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-simple-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.15-bin.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/rabbitmq-client.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/it.eng.paas.util.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/sigar.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib"/>
+	<classpathentry exported="true" kind="lib" path="lib/ant-googlecode-0.0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/ant.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-codec-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpclient-4.1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/httpcore-4.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/sardine.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/svnkit.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/svntask.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/sweetened.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,7 @@
+<form id="Upload" action="upload.php" enctype="multipart/form-data" method="post">     
+        <p>
+            <label for="file">Upload app:</label>
+            <input id="file" type="file" name="file"/>
+        </p>         
+        <input id="upload" type="submit" class="button" name="upload" value="Upload"/>
+</form>

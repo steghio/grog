@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="it.eng.paas.util">
+    <property environment="env"/>
+    <property name="it.eng.paas.aee.location" value="../it.eng.paas.aee"/>
+    <property name="it.eng.paas.networking.location" value="../it.eng.paas.networking"/>
+    <property name="test.location" value="../test"/>
+    <property name="ECLIPSE_HOME" value="../../../../../../springsource_java_7/sts-2.8.0.RELEASE"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="it.eng.paas.util.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/sigar.jar"/>
+    	<pathelement location="lib/ant-googlecode-0.0.2.jar"/>
+    	<pathelement location="lib/ant.jar"/>
+    		<pathelement location="lib/commons-codec-1.4.jar"/>
+    		<pathelement location="lib/commons-logging-1.1.1.jar"/>
+    		<pathelement location="lib/httpclient-4.1.2.jar"/>
+    		<pathelement location="lib/httpcore-4.1.3.jar"/>
+    		<pathelement location="lib/sardine.jar"/>
+    	<pathelement location="lib/slf4j-api-1.6.2.jar"/>
+    	<pathelement location="lib/svnkit.jar"/>
+        	<pathelement location="lib/svntask.jar"/>
+    	<pathelement location="lib/sweetend.jar"/>
+        <pathelement location="lib"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="it.eng.paas.util.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build.xml" dir="${it.eng.paas.aee.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${it.eng.paas.aee.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build.xml" dir="${it.eng.paas.networking.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${it.eng.paas.networking.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build.xml" dir="${test.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${test.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+    </target>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+	<target name="dist" depends="build"
+		        description="generate the distribution" >
+		    <!-- Create the distribution directory -->
+		    <mkdir dir="../jars"/>
+		<mkdir dir="C:/paas"/>
+		<!-- copy the JARs that you need to "bin" directory  -->
+		    <copy todir="./bin">
+		        <fileset dir="./lib" includes="*.*" />
+		    </copy>
+
+		
+		    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+		    <jar jarfile="../jars/it.eng.paas.util.jar" basedir="./bin" duplicate="preserve"/>
+		 <copy file="../jars/it.eng.paas.util.jar" todir="../it.eng.paas.aee/lib"/>
+		<copy file="../jars/it.eng.paas.util.jar" todir="../it.eng.paas.networking/lib"/>
+		<copy file="../jars/it.eng.paas.util.jar" todir="../test/lib"/>
+		<copy file="../jars/it.eng.paas.util.jar" todir="../it.eng.paas.management/lib"/>
+		<copy file="../jars/it.eng.paas.util.jar" todir="../it.eng.paas.hostControl/lib"/>
+		<copy file="../jars/it.eng.paas.util.jar" todir="../it.eng.paas.gui/WebContent/WEB-INF/lib"/>
+		  </target>
+</project>

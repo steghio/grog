@@ -1,0 +1,49 @@
+<?php
+require_once("db.php");
+
+function check_existing_username($username){
+	$db = connect();
+	$res = query($db, "select username from users where username='".$username."'");
+	$db->disconnect();
+	if($res->numRows() == 0)return false;
+	return true;
+}
+
+function show_profile($username){
+	$db = connect();
+	$res = query($db, "select appid from apps where username='".$username."'");
+	$ret="<p>Deployed applications:</p>";
+if($res->numRows()>0){
+}
+for($i=0; $i<$res->numRows(); $i++){
+		$row=$res->fetchRow(MDB2_FETCHMODE_ASSOC);
+		$ret.=$row["appid"]." <form action='manage.php' method='post'><input type='hidden' name='appid' value='".$row["appid"]."'/><input type='submit' value='Manage'/></form>";
+	}
+	$db->disconnect();
+	return $ret;
+}
+
+function unzip($file){
+echo '$file';
+$zip = new ZipArchive;
+     $res = $zip->open($file);
+     if ($res === TRUE) {
+         $zip->extractTo("./tmp");
+         $zip->close();
+	echo 'ok';
+     }
+else echo 'fail';
+}
+
+function telnet($xml){
+$fp = fsockopen("192.168.23.27", 6666);//23.27
+    fwrite($fp, $xml);
+    fclose($fp);
+}
+
+function readProperties($file){
+$array = parse_ini_file($file);
+return $array;
+}
+
+?>

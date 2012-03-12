@@ -1,0 +1,3 @@
+create database gui;
+create table users(username varchar(20), password varchar(20), primary key(username));
+create table apps(appid varchar(200), username varchar(20), primary key(appid));

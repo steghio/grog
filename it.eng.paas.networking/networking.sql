@@ -1,0 +1,2 @@
+--DB networking
+create table routing(id int AUTO_INCREMENT, appID varchar(50) not null, ip varchar(15) not null, clientPort varchar(5), consolePort varchar(5) not null,unique index(appID, ip, consolePort), primary key(id));

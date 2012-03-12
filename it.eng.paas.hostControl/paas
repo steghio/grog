@@ -1,0 +1,2 @@
+#!/bin/bash
+cd /paas/hostControl && java -jar it.eng.paas.hostControl.jar &

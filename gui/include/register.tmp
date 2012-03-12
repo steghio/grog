@@ -1,0 +1,19 @@
+<form action="register.php" method="post" onsubmit=" 
+if(this.username.value == '') { alert('Please insert a username'); this.username.focus(); return false; }
+if(this.pwd.value == '') { alert('Please insert a password'); this.pwd.focus(); return false; } 
+if(this.pwd_check.value == '' || this.pwd.value != this.pwd_check.value) { alert('Please double check your password'); this.pwd_check.focus(); return false; } 
+if(this.email.value == '') { alert('Per favore inserisci un indirizzo mail valido'); this.email.focus(); return false; } 
+if(this.email_check.value == '' || this.email.value != 	this.email_check.value) { alert('Per favore ricontrolla la mail'); this.email.focus(); return false; } 
+ return true;">
+	<table>
+		<tr><td>Username: </td><td><input type='text' name='username' id ='username_ins' value=''onblur="if(this.value != '') callAjax(this.value, this.id);"/></td></tr>
+		<tr><td>Password: </td><td><input type='password' name='pwd' value=''/></td></tr>
+		<tr><td>Type password again: </td><td><input type='password' name='pwd_check' value=''/></td></tr>
+	</table>
+	<br/>
+	<input type="submit" class="button" name="register" value="Register"/>
+</form>
+	<br/>
+<form action="index.php" method="post">
+	<input type="submit" class="button" name="cancel" value="Cancel"/>
+</form>
