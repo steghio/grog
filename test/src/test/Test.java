@@ -63,11 +63,10 @@ class Test{
 	
 	public static void main(String[] args){
 
-		List<String> list1 = new LinkedList<>();
-		list1.add("adfgafdgasdfa");
-		List<String> list2 = null;
-		List<String> res = PaasUtilities.mergeNoDuplicates(list1, list2);
-		System.out.println(res.size());
+		String a = "aee.aee_1921682328.lol";
+		String [] splitted = a.split("\\.");
+		System.out.println("1 "+splitted[0]+" 2"+splitted[1]+"3 "+splitted[2]);
+		if(splitted[1].contains("aee_"))System.out.println("AAA");
  }
 
  

@@ -18,6 +18,42 @@ public class Telnet {
 	static Socket client;
 	static PrintWriter out;
 	
+	public static void sendScale(String appid, String instances){
+		Connection connection = null;
+	    Channel channel = null;
+	    try {
+	    	ConnectionFactory factory = new ConnectionFactory();
+		      factory.setHost("192.168.23.28");
+		  
+		      connection = factory.newConnection();
+		      channel = connection.createChannel();
+
+		      channel.exchangeDeclare("192.168.23.28", "topic");
+
+		      String routingKey = "aee.*.scaleApp";//getRouting(argv);
+		      Document xml = PaasUtilities.createBaseXML("scale_app");
+		      PaasUtilities.addXMLnode(xml, "appID", appid);
+		      PaasUtilities.addXMLnode(xml, "instances", instances);
+		      PaasUtilities.addXMLnode(xml, "location", "http://192.168.23.94/mnt/storage/nas1/apps/"+appid+".zip");
+		      String message = PaasUtilities.XML2String(xml);
+
+		      channel.basicPublish("192.168.23.28", routingKey, null, message.getBytes());
+		      System.out.println(" [x] Sent '" + routingKey + "':'" + message + "'");
+
+	    }
+	    catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    finally {
+	      if (connection != null) {
+	        try {
+	          connection.close();
+	        }
+	        catch (Exception ignore) {}
+	      }
+	    }
+	}
+	
 	public static void sendStop(String appid){
 		Connection connection = null;
 	    Channel channel = null;
@@ -53,11 +89,8 @@ public class Telnet {
 	  }
 
 	
-	public static void action(String url, String appid, String type, String manifest){
+	public static void action(String url, String appid, String type, String manifest, String instances){
 		try{
-			//CAMBIA CLIENT!
-			//75 ubuntu
-			
 			switch(type){
 			case "start":{
 				client = new Socket(url, 6666);
@@ -78,6 +111,10 @@ public class Telnet {
 				sendStop(appid);
 				break;
 			}
+			case "scale":{
+				sendScale(appid, instances);
+				break;
+			}
 			default:{
 				
 			}
@@ -94,8 +131,9 @@ public class Telnet {
 		String appid = args[1];
 		String type = args[2];
 		String manifest = args[3];
+		String instances = args[4];
 		
-		action(url, appid, type, manifest);
+		action(url, appid, type, manifest, instances);
 		
 	}
 }

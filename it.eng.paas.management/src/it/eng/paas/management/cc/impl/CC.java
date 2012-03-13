@@ -574,10 +574,10 @@ public class CC implements Runnable{
 					String location = ManagementHibernateUtil.getAppLocation(appID).get(0);
 					//finally check if it is better to deploy a new one or start another instance
 					//if I only had accept app replies
-					if(aeeHas[0] == "")sendStartReply(appID, location, aeeHas[0]);
+					if(aeeHas[0] == "")sendStartReply(appID, location, aeeAccept[0]);
 					else{
 						//if I only had alreadyPresent replies
-						if(aeeAccept[0] == "")sendStartReply(appID, location, aeeAccept[0]);
+						if(aeeAccept[0] == "")sendStartReply(appID, location, aeeHas[0]);
 						//else if I have both
 						else{
 							//based on deploy percentages, decide whether to deploy or start instance

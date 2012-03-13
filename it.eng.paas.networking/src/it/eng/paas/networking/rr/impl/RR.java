@@ -349,6 +349,16 @@ public class RR implements Runnable{
 					RoutingInfoHibernateUtil.saveRoutingInfo(r);
 					//propagate info via P2P
 					p2p.sendMulticast(PaasUtilities.XML2String(r.toXML("app_start")), PaasMessage.TOPIC_START_APP);
+					//notify AEEs of new service address
+					/*
+					 * message is:
+					 * <service>NAME</service>
+					 * <addresses>IP1:clientPORT1:consolePORT1;...;IPN:clientPORTN:consolePORTN</addresses>
+					 */
+					Document additionalInfo = PaasUtilities.createBaseXML("service_addresses");
+					PaasUtilities.addXMLnode(additionalInfo, "service", appID);
+					PaasUtilities.addXMLnode(additionalInfo, "addresses", IP+":"+clientPort);
+					Messenger.getInstance().sendMessage(PaasMessage.TOPIC_SERVICE_ADDRESS, PaasMessage.REPLY_ADDRESS_FOUND, null, additionalInfo);
 				}
 				//else duplicate message, skip it
 				iter.remove();

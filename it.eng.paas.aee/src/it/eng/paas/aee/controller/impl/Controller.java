@@ -296,7 +296,7 @@ public class Controller implements IController, Runnable{
 				if(Runner.getInstance().isAppDeployed(appID)){
 					Document additionalInfo = PaasUtilities.createBaseXML("current_status");
 					PaasUtilities.addXMLnode(additionalInfo, "appID", appID);
-					PaasUtilities.addXMLnode(additionalInfo, "aee", aee_current_IP);
+					PaasUtilities.addXMLnode(additionalInfo, "aee", Messenger.getInstance().getQueueName());
 					PaasUtilities.addXMLnode(additionalInfo, "CPU_usage", PaasUtilities.getCPUUsage());
 					PaasUtilities.addXMLnode(additionalInfo, "RAM_usage", PaasUtilities.getRAMUsage());
 					Messenger.getInstance().sendMessage(PaasMessage.TOPIC_ACCEPT_APP, PaasMessage.REPLY_APP_ALREADY_PRESENT, replyTo, additionalInfo);
@@ -308,7 +308,7 @@ public class Controller implements IController, Runnable{
 						if(checkAppRequirements(read.get("manifest"))){
 							Document additionalInfo = PaasUtilities.createBaseXML("current_status");
 							PaasUtilities.addXMLnode(additionalInfo, "appID", appID);
-							PaasUtilities.addXMLnode(additionalInfo, "aee", aee_current_IP);
+							PaasUtilities.addXMLnode(additionalInfo, "aee", Messenger.getInstance().getQueueName());
 							PaasUtilities.addXMLnode(additionalInfo, "CPU_usage", PaasUtilities.getCPUUsage());
 							PaasUtilities.addXMLnode(additionalInfo, "RAM_usage", PaasUtilities.getRAMUsage());
 							Messenger.getInstance().sendMessage(PaasMessage.TOPIC_ACCEPT_APP, PaasMessage.REPLY_APP_ACCEPTABLE, replyTo, additionalInfo);

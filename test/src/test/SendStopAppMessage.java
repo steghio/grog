@@ -28,7 +28,7 @@ class SendStopAppMessage{
 
 		      String routingKey = "aee.*.stopApp";//getRouting(argv);
 		      Document xml = PaasUtilities.createBaseXML("stop_app");
-		      PaasUtilities.addXMLnode(xml, "appID", "pippo");
+		      PaasUtilities.addXMLnode(xml, "appID", "it.eng.test.remote.ds.hello");
 		      String message = PaasUtilities.XML2String(xml);
 
 		      channel.basicPublish("192.168.23.28", routingKey, null, message.getBytes());

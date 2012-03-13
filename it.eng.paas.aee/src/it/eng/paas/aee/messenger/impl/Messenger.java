@@ -163,66 +163,122 @@ public class Messenger implements IMessenger, Runnable{
 				continue;
 			}
 			//get topic from routing key
-			PaasMessage topic = PaasMessage.getTopic(delivery.getEnvelope().getRoutingKey());
-			//get message, body is byte[] so ALWAYS new String!!!
-			Document message = PaasUtilities.string2XML(new String(delivery.getBody()));
-			//get replyTo info from messag envelope
-			String replyTo = delivery.getProperties().getReplyTo();
-			//add replyTo field to message if necessary
-			if(replyTo != null)PaasUtilities.addXMLnode(message, "replyTo", replyTo);
-			//TODO riga sotto solo per test
-			System.out.println("received message, topic: "+topic.getText()+" replyTo: "+replyTo+" message "+new String(delivery.getBody()));
-			logger.info("received message, topic: "+topic.getText()+" replyTo: "+replyTo+" message "+new String(delivery.getBody()));
-			switch(topic){
-				case TOPIC_ACCEPT_APP:{
-					/*message is:
-					 * <appID>appID</appID>
-					 * <replyTo>WHO</replyTo>
-					 * <manifest>manifest</manifest> 
-					 */
-					Controller.getInstance().addAcceptAppMessage(message);
-					break;
+			String routing = delivery.getEnvelope().getRoutingKey();
+			//check if message is broadcast or reply to someone else
+			String [] splitted = routing.split("\\.");
+			//if it is broadcast
+			if(splitted[1]==null || splitted[1].equalsIgnoreCase("") || splitted[1].equalsIgnoreCase("*")){
+				PaasMessage topic = PaasMessage.getTopic(routing);
+				//get message, body is byte[] so ALWAYS new String!!!
+				Document message = PaasUtilities.string2XML(new String(delivery.getBody()));
+				//get replyTo info from messag envelope
+				String replyTo = delivery.getProperties().getReplyTo();
+				//add replyTo field to message if necessary
+				if(replyTo != null)PaasUtilities.addXMLnode(message, "replyTo", replyTo);
+				//TODO riga sotto solo per test
+				System.out.println("received message, topic: "+topic.getText()+" replyTo: "+replyTo+" message "+new String(delivery.getBody()));
+				logger.info("received message, topic: "+topic.getText()+" replyTo: "+replyTo+" message "+new String(delivery.getBody()));
+				switch(topic){
+					case TOPIC_ACCEPT_APP:{
+						/*message is:
+						 * <appID>appID</appID>
+						 * <replyTo>WHO</replyTo>
+						 * <manifest>manifest</manifest> 
+						 */
+						Controller.getInstance().addAcceptAppMessage(message);
+						break;
+					}
+					case REPLY_ADDRESS_FOUND:{
+						/*
+						 * message is:
+						 * <service>NAME</service>
+						 * <IP>IP</IP>
+						 * <port>PORT</port>
+						 */
+						Runner.getInstance().addServiceAddress(message);
+						break;
+					}
+					case TOPIC_STOP_APP:{
+						/*
+						 * message is:
+						 * <appID>appID</appID>
+						 */
+						Controller.getInstance().addStopAppMessage(message);
+						break;
+					}
+					case TOPIC_SCALE_APP:{
+						/*
+						 * message is:
+						 * <appID>appID</appID>
+						 * <instances>NUMBER</instances>
+						 * <location>http://IP:PORT/FOLDER</location>
+						 */
+						Controller.getInstance().addScaleAppMessage(message);
+						break;
+					}
+					default:{
+						//you should never get here
+						System.err.println("Bad request from: "+replyTo+" message: "+message);
+					}
 				}
-				case TOPIC_START_APP:{
-					/*
-					 * message is:
-					 * <appID>appID</appID>
-					 * <location>http://IP:PORT/FOLDER</location>
-					 */
-					Controller.getInstance().addStartAppMessage(message);
-					break;
-				}
-				case TOPIC_STOP_APP:{
-					/*
-					 * message is:
-					 * <appID>appID</appID>
-					 */
-					Controller.getInstance().addStopAppMessage(message);
-					break;
-				}
-				case TOPIC_SCALE_APP:{
-					/*
-					 * message is:
-					 * <appID>appID</appID>
-					 * <instances>NUMBER</instances>
-					 * <location>http://IP:PORT/FOLDER</location>
-					 */
-					Controller.getInstance().addScaleAppMessage(message);
-					break;
-				}
-				case REPLY_ADDRESS_FOUND:{
-					/*
-					 * message is:
-					 * <service>NAME</service>
-					 * <IP>IP</IP>
-					 * <port>PORT</port>
-					 */
-					Runner.getInstance().addServiceAddress(message);
-					break;
-				}
-				default:{
-					//you should never get here
-					System.err.println("Bad request from: "+replyTo+" message: "+message);
+			}
+			//else it is for someone
+			else{
+				//check if it is for me
+				if(splitted[1].contains(queueName)){
+					PaasMessage topic = PaasMessage.getTopic(routing);
+					//get message, body is byte[] so ALWAYS new String!!!
+					Document message = PaasUtilities.string2XML(new String(delivery.getBody()));
+					//get replyTo info from messag envelope
+					String replyTo = delivery.getProperties().getReplyTo();
+					//add replyTo field to message if necessary
+					if(replyTo != null)PaasUtilities.addXMLnode(message, "replyTo", replyTo);
+					//TODO riga sotto solo per test
+					System.out.println("received message, topic: "+topic.getText()+" replyTo: "+replyTo+" message "+new String(delivery.getBody()));
+					logger.info("received message, topic: "+topic.getText()+" replyTo: "+replyTo+" message "+new String(delivery.getBody()));
+					switch(topic){
+						case TOPIC_START_APP:{
+							/*
+							 * message is:
+							 * <appID>appID</appID>
+							 * <location>http://IP:PORT/FOLDER</location>
+							 */
+							Controller.getInstance().addStartAppMessage(message);
+							break;
+						}
+						case TOPIC_STOP_APP:{
+							/*
+							 * message is:
+							 * <appID>appID</appID>
+							 */
+							Controller.getInstance().addStopAppMessage(message);
+							break;
+						}
+						case TOPIC_SCALE_APP:{
+							/*
+							 * message is:
+							 * <appID>appID</appID>
+							 * <instances>NUMBER</instances>
+							 * <location>http://IP:PORT/FOLDER</location>
+							 */
+							Controller.getInstance().addScaleAppMessage(message);
+							break;
+						}
+						case REPLY_ADDRESS_FOUND:{
+							/*
+							 * message is:
+							 * <service>NAME</service>
+							 * <IP>IP</IP>
+							 * <port>PORT</port>
+							 */
+							Runner.getInstance().addServiceAddress(message);
+							break;
+						}
+						default:{
+							//you should never get here
+							System.err.println("Bad request from: "+replyTo+" message: "+message);
+						}
+					}
 				}
 			}
 		}
