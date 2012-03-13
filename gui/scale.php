@@ -3,10 +3,8 @@ require_once("check.php");
 check_session();
 require_once("utilities.php");
 
-/*
-java -jar SendScaleAppMessage
-*/
+exec("java -jar ./tmp/it.eng.paas.telnet.jar 192.168.23.27 {$_POST["appid"]} scale ./tmp/{$_POST["appid"]}.MF {$_POST["instances"]}");
 
-header('Location: manage.php');
+header('Location: profile.php');
 
 ?>

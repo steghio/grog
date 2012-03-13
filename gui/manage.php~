@@ -1,0 +1,8 @@
+<?php
+require_once("check.php");
+check_session();
+require_once("utilities.php");
+$id = substr($_POST["appid"], 0, strlen($_POST["appid"])-4);
+
+echo $id;
+?>

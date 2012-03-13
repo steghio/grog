@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Export-Package: it.eng.test.remote.ds.helloconsumer
+Service-Component: OSGI-INF/client.xml
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 1.0.0.201110041427
+Bundle-Name: Helloconsumer
+Bundle-ManifestVersion: 2
+Import-Package: it.eng.test.remote.ds.hello,org.eclipse.equinox.app
+Bundle-SymbolicName: it.eng.test.remote.ds.helloconsumer;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: it.eng.test.remote.ds.hello
+Require-OS = Windows XP
+Require-Arch = x86
+Require-RAM = 64
+Require-Hz = 1000
+Require-Cores = 1

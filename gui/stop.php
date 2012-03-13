@@ -3,10 +3,8 @@ require_once("check.php");
 check_session();
 require_once("utilities.php");
 
-/*
-java -jar SendStopAppMessage
-*/
+exec("java -jar ./tmp/it.eng.paas.telnet.jar 192.168.23.27 {$_POST["appid"]} stop ./tmp/{$_POST["appid"]}.MF 0");
 
-header('Location: manage.php');
+header('Location: profile.php');
 
 ?>
